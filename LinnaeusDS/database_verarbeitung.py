@@ -8,6 +8,8 @@ new_width = 64
 def main(train_path):
     train_set = os.listdir(train_path)
     for ele in train_set:
+        if ele.endswith('Store'):
+            continue
         tmp_path = os.path.join(train_path, ele)
         images = os.listdir(tmp_path)
         for image in images:
@@ -21,6 +23,8 @@ def main(train_path):
 def shrink_db(train_path, num = 600):
     train_set = os.listdir(train_path)
     for ele in train_set:
+        if ele.endswith('Store'):
+            continue
         tmp_path = os.path.join(train_path, ele)
         images = os.listdir(tmp_path)
         for id, image in enumerate(images):
