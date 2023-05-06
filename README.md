@@ -10,7 +10,7 @@ Basic idea:
 2. At each scale level apply a HoG method, and calculate the dominant direction via magnitude voting.
 3. Append the voting result from all of the blocks to form a feature vector to represent this image.
 4. Use kNN algorithm to classify the image.
-<img src="./img/gradient.png" width="400" height="300">
+<img src="./img/gradient.png" width="400" height="350">
 
 ## Datasets
 The datasets tha I'm using for this tasks is [Linnaeus 5 dataset 64x64](http://chaladze.com/l5/). For simplicity (because i don't have much time) I've just apple the classes `dog` and `bird`. To prepare the requied dataset, put your downloaded dataset in dir `LinnaeusDS` and run the command:
@@ -26,4 +26,14 @@ Install them with command:
 pip install -r requirements.txt
 ```
 Then you can play with the code in the jupyter notebook: )
-## Result
+## Result & note
+The highest accu that i've got is 62.25%. A little better than random guess. The cause might be:
+1. I am stupid, i did something wrong.
+2. The combination of traditional computer vision approaches and kNN don't work well generally.
+<img src="./img/pca.png" width="400" height="300">
+I did an pca, no clear decision boundrary can be found. That means the representation is not representative enough.
+Since i don't have a benchmark, no forther conclution can be draw.
+
+## TODO
+1. debug
+2. optimize
