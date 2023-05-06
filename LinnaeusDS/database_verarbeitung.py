@@ -36,7 +36,7 @@ def shrink_db(train_path, num = 600):
 
 
 if __name__ == '__main__':
-    main(train_path='./train/')
-    main(train_path='./test/')
+    # main(train_path='./train/')
+    # main(train_path='./test/')
     shrink_db(train_path='./train/')
     shrink_db(train_path='./test/', num=200)

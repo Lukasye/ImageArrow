@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 def load_animals(path: str):
     img = Image.open(path)
+    img.convert('HSV')
     pix = np.array(img)
     return pix / 255
 
@@ -27,20 +28,49 @@ def calc_gradient(block):
         voting_set[0] += x
         voting_set[1] += y
     mag = np.linalg.norm(voting_set)
+    # x = []
+    # y = []
+    # for i in range(8):
+    #     for j in range(8):
+    #         x.append(i)
+    #         y.append(j)
+
+    # x = np.array(x)
+    # y = np.array(y)
+    # print(x)
+    # print(y)
+    # plt.imshow(block, cmap='gray')
+    # for xx, yy, dx, dy in zip(x, y, grad_x, grad_y):
+    #     plt.arrow(xx, yy, dx, dy, color='red', width = 0.05)
+    # plt.show()
     if np.abs(mag) > 1e-10: 
         return voting_set / mag
     else:
         return np.zeros(2)
 
 
+# def gaussian_pyramide(mat):
+#     down_sample = np.ones((2, 2)) / 4
+#     results = [mat.copy()]
+#     for sigma in range(3):
+#         mat = gaussian_filter(mat, sigma=1, radius=4, mode='mirror')
+#         mat = convolve2d(mat, down_sample, boundary='symm')
+#         mat = interpolation.zoom(mat,.5) #decimate resolution
+#         results.append(mat.copy())
+#     return results
+
+
 def gaussian_pyramide(mat):
     down_sample = np.ones((2, 2)) / 4
-    results = [mat.copy()]
-    for sigma in range(3):
-        mat = gaussian_filter(mat, sigma=1, radius=4, mode='mirror')
-        mat = convolve2d(mat, down_sample, boundary='symm')
-        mat = interpolation.zoom(mat,.5) #decimate resolution
-        results.append(mat.copy())
+    results = []
+    for i in range(3):
+        hsv_seg = mat[:, :, i]
+        results.append(hsv_seg.copy())
+        for _ in range(3):
+            hsv_seg = gaussian_filter(hsv_seg, sigma=1, radius=4, mode='mirror')
+            hsv_seg = convolve2d(hsv_seg, down_sample, boundary='symm')
+            hsv_seg = interpolation.zoom(hsv_seg,.5) #decimate resolution
+            results.append(hsv_seg.copy())
     return results
 
 def feature_extraction(img):
@@ -64,16 +94,18 @@ def feature_extraction(img):
 
 
 def main():
-    path = './database/dog/1.jpg'
+    path = '/Users/lukasye/Projects/ImageArrow/LinnaeusDS/test/dog/2_64.jpg'
     img = load_animals(path=path)
-    
+    hiera = gaussian_pyramide(img) 
     # show pyramid
     # for num, im in enumerate(hiera):
     #     plt.subplot(2, 2, num + 1)
     #     plt.imshow(im, cmap='gray')
     # plt.show()
 
-    feature_extraction(hiera)
+    blocks = feature_extraction(hiera)
+    print(blocks)
+    print(blocks.shape)
 
 
 
