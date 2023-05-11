@@ -33,7 +33,8 @@ The highest accu that i've got is 63.75%. A little better than random guess. The
 1. I am stupid, i did something wrong.
 2. The combination of traditional computer vision approaches and kNN don't work well generally.<br>
 <img src="./img/pca.png" width="400" height="350"><br>
-I did an pca, no clear decision boundrary can be found. That means the representation is not representative enough.
+I did an pca, no clear decision boundrary can be found. That means the representation is not representative enough.<br>
+After the first attempt, I applied the 1-norm, it turns out 1-norm performs slightly better than 2, as I expected. And I also tried it on a multi-calss classification task, which the final result came to 47,8%.
 Since i don't have a benchmark, no forther conclution can be draw.
 
 ## TODO
